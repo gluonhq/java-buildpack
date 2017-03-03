@@ -40,14 +40,12 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::BaseComponent#detect)
       def detect
-        payara_script? ? PayaraMicro.to_s.dash_case : nil
+        domain_xml? ? PayaraMicro.to_s.dash_case : nil
       end
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
-        (@droplet.root + 'bin/jq').chmod 0o755
-        (@droplet.root + 'bin/payara-micro').chmod 0o755
-
+        puts @payara_micro_utils.lib(@droplet)
         @droplet.additional_libraries.link_to(@payara_micro_utils.lib(@droplet))
       end
 
@@ -74,8 +72,10 @@ module JavaBuildpack
           @droplet.java_opts.as_env_var,
           '&&',
           @droplet.environment_variables.as_env_vars,
-          'exec',
-          "bin/payara-micro",
+          'eval',
+          "#{qualify_path @droplet.java_home.root, @droplet.root}/bin/java",
+          classpath,
+          'com.gluonhq.cloudlink.cloudfoundry.ApplyVcapServices',
           '&&',
           'eval',
           'exec',
@@ -88,7 +88,7 @@ module JavaBuildpack
       end
 
       def arguments
-        '--port $PORT --noCluster --deployment gluoncloudlink.war --domainConfig domain.xml'
+        '--port $PORT --noCluster --deploy $PWD/gluoncloudlink.war --domainConfig $PWD/domain.xml'
       end
 
       def manifest_class_path
@@ -96,8 +96,8 @@ module JavaBuildpack
         values.nil? ? [] : values.split(' ').map { |value| @droplet.root + value }
       end
 
-      def payara_script?
-        (@application.root + 'bin/payara-micro').exist?
+      def domain_xml?
+        (@application.root + 'domain.xml').exist?
       end
 
     end

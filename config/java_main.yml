@@ -16,4 +16,4 @@
 # Configuration for the Java Main container
 ---
 java_main_class:
-arguments: --port $PORT --deploy $PWD/gluoncloudlink.war --domainConfig $PWD/domain.xml --noCluster --disablePhoneHome
+arguments:
