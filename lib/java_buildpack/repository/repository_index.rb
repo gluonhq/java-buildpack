@@ -82,18 +82,20 @@ module JavaBuildpack
       end
 
       def platform
-        redhat_release = Pathname.new('/etc/redhat-release')
+        'trusty'
 
-        if redhat_release.exist?
-          tokens = redhat_release.read.match(/(\w+) (?:Linux )?release (\d+)/)
-          "#{tokens[1].downcase}#{tokens[2]}"
-        elsif `uname -s` =~ /Darwin/
-          'mountainlion'
-        elsif !`which lsb_release 2> /dev/null`.empty?
-          `lsb_release -cs`.strip
-        else
-          raise 'Unable to determine platform'
-        end
+        # redhat_release = Pathname.new('/etc/redhat-release')
+        #
+        # if redhat_release.exist?
+        #   tokens = redhat_release.read.match(/(\w+) (?:Linux )?release (\d+)/)
+        #   "#{tokens[1].downcase}#{tokens[2]}"
+        # elsif `uname -s` =~ /Darwin/
+        #   'mountainlion'
+        # elsif !`which lsb_release 2> /dev/null`.empty?
+        #   `lsb_release -cs`.strip
+        # else
+        #   raise 'Unable to determine platform'
+        # end
       end
 
     end

@@ -19,6 +19,7 @@ containers:
   - "JavaBuildpack::Container::DistZip"
   - "JavaBuildpack::Container::Groovy"
   - "JavaBuildpack::Container::JavaMain"
+  - "JavaBuildpack::Container::PayaraMicro"
   - "JavaBuildpack::Container::PlayFramework"
   - "JavaBuildpack::Container::Ratpack"
   - "JavaBuildpack::Container::SpringBoot"
