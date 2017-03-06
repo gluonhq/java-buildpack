@@ -80,6 +80,7 @@ module JavaBuildpack
           'eval',
           'exec',
           "#{qualify_path @droplet.java_home.root, @droplet.root}/bin/java",
+          '-DAS_DERBY_INSTALL=$PWD/derby',
           '$JAVA_OPTS',
           classpath,
           MAIN_CLASS,
