@@ -89,7 +89,7 @@ module JavaBuildpack
       end
 
       def arguments
-        '--port $PORT --noCluster --deploy $PWD/gluoncloudlink.war --domainConfig $PWD/domain.xml'
+        '--port $PORT --deploy $PWD/gluoncloudlink.war --domainConfig $PWD/domain.xml'
       end
 
       def manifest_class_path
